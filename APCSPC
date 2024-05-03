@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ $1 == "edit" ]]; then
+python APCSPC_edit.py $2
+else
+java APCSPC
+fi
