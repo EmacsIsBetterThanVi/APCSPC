@@ -14,13 +14,17 @@ public class APCSPC{
   public static void main(String[] args){
       List<String> lines = new ArrayList<String>();
       File file = new File(args[0]+".APPC");
-      while(sc.hasNextLine()){
-        lines.add(sc.nextLine());
+      Scanner scn = new Scanner(file);
+      while(scn.hasNextLine()){
+        lines.add(scn.nextLine());
       }
       boolean canrun = true;
       while(canrun){
         canrun=lang(tokenize(lines.get(addr)));
         addr++;
+        if(addr>=lines.size()){
+          canrun=false;
+        }
       }
   }
   public static Map<Integer,Pair<Character, String>> tokenize(String code){
@@ -52,69 +56,87 @@ public class APCSPC{
   }
 
   public static Object lang(Map<Integer,Pair<Character, String>> tokens) {
-    if(tokens.get(0).key == ' '){
-      if(tokens.get(1).value == "←"){
-        while(tokens.get(2).key != 'e'){
+    if(tokens.get(0).getKey() == ' '){
+      if(tokens.get(1).getValue() == "←"){
+        while(tokens.get(2).getKey() != 'e'){
           String tmp="";
           for(int i = 0; i < tokens.size()-2; i++){
-            tmp=tmp+tokens.get(i).value+tokens.get(i).key;
+            tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())))
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
         }
-        variables.put(tokens.get(0).value, new Pair<String, Object>(TYPEOF(tokens.get(2).value),tokens.get(2).value));
-      } else if(tokens.get(1).value == "+"){
-        while(tokens.get(2).key != 'e'){
+        variables.put(tokens.get(0).getValue(), new Pair<String, Object>(TYPEOF(tokens.get(2).getValue()),tokens.get(2).getValue()));
+      } else if(tokens.get(1).getValue() == "+"){
+        while(tokens.get(2).getKey() != 'e'){
           String tmp="";
           for(int i = 2; i < tokens.size()-2; i++){
-            tmp=tmp+tokens.get(i).value+tokens.get(i).key;
+            tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())))
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
         }
-        return tokens.get(0).value+tokens.get(2).value
-      } else if(tokens.get(1).value == "-"){
-        while(tokens.get(2).key != 'e'){
+        if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+        return Interger.parseInt(tokens.get(0).getValue())+Interger.parseInt(tokens.get(2).getValue());
+        if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+          return Double.parseDouble(tokens.get(0).getValue())+Double.parseDouble(tokens.get(2).getValue());
+      } else if(tokens.get(1).getValue() == "-"){
+        while(tokens.get(2).getKey() != 'e'){
           String tmp="";
           for(int i = 2; i < tokens.size()-2; i++){
-            tmp=tmp+tokens.get(i).value+tokens.get(i).key;
+            tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())))
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
         }
-        return tokens.get(0).value-tokens.get(2).value
-      } else if(tokens.get(1).value == "*"){
-        while(tokens.get(2).key != 'e'){
+        if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+          return Interger.parseInt(tokens.get(0).getValue())-Interger.parseInt(tokens.get(2).getValue());
+          if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+            return Double.parseDouble(tokens.get(0).getValue())-Double.parseDouble(tokens.get(2).getValue());
+        return tokens.get(0).getValue().replace(tokens.get(2).getValue(), "");
+      } else if(tokens.get(1).getValue() == "*"){
+        while(tokens.get(2).getKey() != 'e'){
           String tmp="";
           for(int i = 2; i < tokens.size()-2; i++){
-            tmp=tmp+tokens.get(i).value+tokens.get(i).key;
+            tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())))
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
         }
-        return tokens.get(0).value*tokens.get(2).value
-      } else if(tokens.get(1).value == "/"){
-        while(tokens.get(2).key != 'e'){
+          if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+            return Interger.parseInt(tokens.get(0).getValue())*Interger.parseInt(tokens.get(2).getValue());
+            if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+              return Double.parseDouble(tokens.get(0).getValue())*Double.parseDouble(tokens.get(2).getValue());
+          return tokens.get(0).getValue().indexOf(tokens.get(2).getValue());
+      } else if(tokens.get(1).getValue() == "/"){
+        while(tokens.get(2).getKey() != 'e'){
           String tmp="";
           for(int i = 2; i < tokens.size()-2; i++){
-            tmp=tmp+tokens.get(i).value/tokens.get(i).key;
+             tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())))
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
         }
-        return tokens.get(0).value+tokens.get(2).value
-      }
+          if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+            return Interger.parseInt(tokens.get(0).getValue())/Interger.parseInt(tokens.get(2).getValue());
+            if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+              return Double.parseDouble(tokens.get(0).getValue())/Double.parseDouble(tokens.get(2).getValue());
+          return tokens.get(0).getValue().split(tokens.get(2).getValue());
+        }
     }
     return true;
   }
   public static String TYPEOF(String value){
     try{
-      Integer.parseInt(value);
+      Integer.parseInt(getValue());
       return "int";
+    } catch(Exception e){
     }
     try{
-      Double.parseDouble(value);
+      Double.parseDouble(getValue());
       return "float";
-    }
+    }catch(Exception e){
+      }
     try{
-      Boolean.parseBoolean(value);
+      Boolean.parseBoolean(getValue());
       return "boolean";
-    }
+    }catch(Exception e){
+      }
     return "string";
   }
 }

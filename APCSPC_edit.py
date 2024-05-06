@@ -14,15 +14,20 @@ def getch():
 x=0
 y=0
 file=[""]
-if sys.argv[1]!="":
-  filename=sys.argv[1]
-else:
+if len(sys.argv)==1:
   filename=""
-try:
-  f=open(filename,"r")
-  file=f.read().split("\n")
-except:
-  print("\007")
+else:
+  if sys.argv[1]!="":
+    filename=sys.argv[1]
+  else:
+    filename=""
+  try:
+    f=open(filename,"r")
+    file=f.read().split("\n")
+  except:
+    print("\007")
+    file=[""]
+fileorg=file
 while True:
   os.system("clear")
   for i in file:
@@ -32,6 +37,8 @@ while True:
   c=getch()
   if(c=='q'):
     os.system("clear")
+    if(file==fileorg):
+      exit()
     print("SAVE[y/n]?", end="")
     sys.stdout.flush()
     c=getch()
@@ -101,29 +108,45 @@ while True:
         f.close()
     elif c=='c':
       os.system("clear")
-      print("SAVE[y/n]?", end="")
-      sys.stdout.flush()
-      c=getch()
-      if(c=='n'):
-        filename=""
-        file=[""]
-        x=0
-        y=0
-      elif(c=='y'):
-        if filename=="":
-          filename=input("Enter a filename: ")
-        if filename=="":
-          print("\007")
-        else:
-          f=open(filename,"w")
-          for i in file:
-            f.write(i+"\n")
-          f.close()
+      if file!=fileorg:
+        print("SAVE[y/n]?", end="")
+        sys.stdout.flush()
+        c=getch()
+        if(c=='n'):
           filename=""
           file=[""]
+          fileorg=[""]
           x=0
           y=0
+        elif(c=='y'):
+          if filename=="":
+            filename=input("Enter a filename: ")
+          if filename=="":
+            print("\007")
+          else:
+            f=open(filename,"w")
+            for i in file:
+              f.write(i+"\n")
+            f.close()
+            filename=""
+            file=[""]
+            x=0
+            y=0
     elif c=='l':
+      if file!=fileorg:
+        print("SAVE[y/N]?", end="")
+        sys.stdout.flush()
+        c=getch()
+        if c=='y':
+          if filename=="":
+            filename=input("Enter a filename: ")
+          if filename=="":
+            print("\007")
+          else:
+            f=open(filename,"w")
+            for i in file:
+              f.write(i+"\n")
+            f.close()
       filename=input("Enter a filename: ")
       if filename=="":
         print("\007")
@@ -134,6 +157,7 @@ while True:
           f.close()
           x=0
           y=0
+          fileorg=file
         except:
           print("\007")
   if c=='z':
