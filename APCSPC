@@ -2,8 +2,12 @@
 if [[ $1 == "edit" ]]; then
 python APCSPC_edit.py $2
 elif [[ $1 == "update" ]]; then
-wget https://github.com/EmacsIsBetterThanVi/APCSPC/blob/Update/version
-
+tmp=$(wget https://github.com/EmacsIsBetterThanVi/APCSPC/blob/Update/version -O /dev/stdout)
+tmp1=$(cat versions)
+if [[ ${tmp%%.*} > ${tmp1%%.*} ]] || [[ ${tmp#*.} > ${tmp1#*.} ]] ; then
+git clone -b Update --single-branch https://github.com/EmacsIsBetterThanVi/APCSPC.git
+generate INSTALL
+fi
 else
 java APCSPC
 fi
