@@ -1,0 +1,7 @@
+generate APCSPC
+link APCSPC
+install
+generate APCSPC_edit
+link APCSPC_edit
+install
+clean

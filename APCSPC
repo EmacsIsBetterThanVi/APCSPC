@@ -1,6 +1,9 @@
 #!/bin/bash
 if [[ $1 == "edit" ]]; then
 python APCSPC_edit.py $2
+elif [[ $1 == "update" ]]; then
+wget https://github.com/EmacsIsBetterThanVi/APCSPC/blob/Update/version
+
 else
 java APCSPC
 fi
