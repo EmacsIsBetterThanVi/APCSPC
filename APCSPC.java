@@ -63,7 +63,7 @@ public class APCSPC{
           for(int i = 0; i < tokens.size()-2; i++){
             tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp).toString()));
         }
         variables.put(tokens.get(0).getValue(), new Pair<String, Object>(TYPEOF(tokens.get(2).getValue()),tokens.get(2).getValue()));
       } else if(tokens.get(1).getValue() == "+"){
@@ -72,7 +72,7 @@ public class APCSPC{
           for(int i = 2; i < tokens.size()-2; i++){
             tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
         }
         if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
         return Interger.parseInt(tokens.get(0).getValue())+Interger.parseInt(tokens.get(2).getValue());
@@ -84,7 +84,7 @@ public class APCSPC{
           for(int i = 2; i < tokens.size()-2; i++){
             tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
         }
         if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
           return Interger.parseInt(tokens.get(0).getValue())-Interger.parseInt(tokens.get(2).getValue());
@@ -97,7 +97,7 @@ public class APCSPC{
           for(int i = 2; i < tokens.size()-2; i++){
             tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
         }
           if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
             return Interger.parseInt(tokens.get(0).getValue())*Interger.parseInt(tokens.get(2).getValue());
@@ -110,30 +110,70 @@ public class APCSPC{
           for(int i = 2; i < tokens.size()-2; i++){
              tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
           }
-          tokens.set(2, new Pair<Character, String>('e', lang(tokenize())));
+          tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
         }
           if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
             return Interger.parseInt(tokens.get(0).getValue())/Interger.parseInt(tokens.get(2).getValue());
             if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
               return Double.parseDouble(tokens.get(0).getValue())/Double.parseDouble(tokens.get(2).getValue());
           return tokens.get(0).getValue().split(tokens.get(2).getValue());
+        } else if(tokens.get(1).getValue() == "MOD"){
+      while(tokens.get(2).getKey() != 'e'){
+        String tmp="";
+        for(int i = 2; i < tokens.size()-2; i++){
+           tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
         }
+        tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
+      }
+        if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+          return Interger.parseInt(tokens.get(0).getValue())%Interger.parseInt(tokens.get(2).getValue());
+          if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+            return Double.parseDouble(tokens.get(0).getValue())%Double.parseDouble(tokens.get(2).getValue());
+        return tokens.get(0).getValue().length()%tokens.get(2).getValue().length();
+      } else if(tokens.get(1).getValue() == "="){
+      while(tokens.get(2).getKey() != 'e'){
+        String tmp="";
+        for(int i = 2; i < tokens.size()-2; i++){
+           tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
+        }
+        tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
+      }
+        if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+          return Interger.parseInt(tokens.get(0).getValue())==Interger.parseInt(tokens.get(2).getValue());
+          if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+            return Double.parseDouble(tokens.get(0).getValue())==Double.parseDouble(tokens.get(2).getValue());
+        return tokens.get(0).getValue()==tokens.get(2).getValue();
+      }
+    } else if(tokens.get(1).getValue() == "≠"){
+      while(tokens.get(2).getKey() != 'e'){
+        String tmp="";
+        for(int i = 2; i < tokens.size()-2; i++){
+           tmp=tmp+tokens.get(i).getValue()+tokens.get(i).getKey();
+        }
+        tokens.set(2, new Pair<Character, String>('e', lang(tokenize(tmp)).toString()));
+      }
+        if(TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "int")
+          return Interger.parseInt(tokens.get(0).getValue())==Interger.parseInt(tokens.get(2).getValue());
+          if((TYPEOF(tokens.get(0).getValue()) == "int" && TYPEOF(tokens.get(2).getValue()) == "float") || (TYPEOF(tokens.get(2).getValue()) == "int" && TYPEOF(tokens.get(0).getValue()) == "float") || (TYPEOF(tokens.get(0).getValue()) == "float" && TYPEOF(tokens.get(2).getValue()) == "float"))
+            return Double.parseDouble(tokens.get(0).getValue())!=Double.parseDouble(tokens.get(2).getValue());
+        return tokens.get(0).getValue()!=tokens.get(2).getValue();
+      }
     }
     return true;
   }
   public static String TYPEOF(String value){
     try{
-      Integer.parseInt(getValue());
+      Integer.parseInt(value.toString());
       return "int";
     } catch(Exception e){
     }
     try{
-      Double.parseDouble(getValue());
+      Double.parseDouble(value.toString());
       return "float";
     }catch(Exception e){
       }
     try{
-      Boolean.parseBoolean(getValue());
+      Boolean.parseBoolean(value.toString());
       return "boolean";
     }catch(Exception e){
       }

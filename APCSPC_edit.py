@@ -176,6 +176,30 @@ while True:
       tmp=list(file[y])
       tmp[x]='→'
       file[y]="".join(tmp)
+  if c=='v':
+    if x==len(file[y]):
+      file[y]=file[y]+'≠'
+      x=x+1
+    else:
+      tmp=list(file[y])
+      tmp[x]='≠'
+      file[y]="".join(tmp)
+  if c=='b':
+    if x==len(file[y]):
+      file[y]=file[y]+'≤'
+      x=x+1
+    else:
+      tmp=list(file[y])
+      tmp[x]='≤'
+      file[y]="".join(tmp)
+  if c=='n':
+    if x==len(file[y]):
+      file[y]=file[y]+'≥'
+      x=x+1
+    else:
+      tmp=list(file[y])
+      tmp[x]='≥'
+      file[y]="".join(tmp)
   if c=='g':
     try:
       x=int(input("COL: "))
