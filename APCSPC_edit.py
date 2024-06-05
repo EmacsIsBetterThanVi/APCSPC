@@ -13,6 +13,7 @@ def getch():
   return ch
 x=0
 y=0
+CASE=False
 file=[""]
 if len(sys.argv)==1:
   filename=""
@@ -184,7 +185,7 @@ while True:
       tmp=list(file[y])
       tmp[x]='≠'
       file[y]="".join(tmp)
-  if c=='b':
+  if c=='n':
     if x==len(file[y]):
       file[y]=file[y]+'≤'
       x=x+1
@@ -192,7 +193,7 @@ while True:
       tmp=list(file[y])
       tmp[x]='≤'
       file[y]="".join(tmp)
-  if c=='n':
+  if c=='m':
     if x==len(file[y]):
       file[y]=file[y]+'≥'
       x=x+1
@@ -206,6 +207,8 @@ while True:
       y=int(input("ROW: "))
     except:
       print("\007")
+  if c=='t':
+    CASE=not CASE
   if c=='l':
     c=getch()
     if x==len(file[y]):
@@ -216,6 +219,8 @@ while True:
       tmp[x]=c
       file[y]="".join(tmp)
   if c not in "qwertyuiopasdfghjklzxcvbnm":
+    if(CASE):
+      c=chr(ord(c)+32)
     if x==len(file[y]):
       file[y]=file[y]+c
       x=x+1
