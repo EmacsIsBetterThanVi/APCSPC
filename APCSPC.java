@@ -32,6 +32,7 @@ public class APCSPC{
     char[] chararr = new char[256];
     int tt=0;
     int tc=0;
+    boolean NAME=false;
     boolean Quoats=false;
     for(int i = 0; i < code.length(); i++){
       if(code.charAt(i)=='"'){
@@ -60,6 +61,10 @@ public class APCSPC{
         tokens.putIfAbsent(tt, new Pair<Character, String>(',',new String(chararr)));
         tt++;
         continue;
+      } else if(code.charAt(i) == '`'){
+        if(name){
+          charrarr=((String)variables.get(new String(charrarr)).getValue()).toCharArray();
+        } else name=true;
       }else{
         chararr[tc] = code.charAt(i);
         tc++;
