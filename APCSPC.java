@@ -198,7 +198,7 @@ public class APCSPC{
           }
       }
     } else if(tokens.get(0).getKey() == '('){
-      if(tokens.get(0).getValue() == "DISPLAY"){
+      if(tokens.get(0).getValue() == "DISPLAY"){ 
         if(tokens.get(1).getKey() == ','){
           int printcount = tokens.get(1).getValue().split("%").length-1;
           String arr[] = new String[tokens.keySet().length-2];
@@ -211,6 +211,8 @@ public class APCSPC{
         } else if(tokens.get(1).getKey() == ')'){
           System.out.println(tokens.get(1).getValue());
         } 
+      } if(tokens.get(0).getValue() == "INPUT"){
+          return sc.nextLine();
       }
     }
     return true;
